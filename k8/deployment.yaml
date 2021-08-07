@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: appnodejs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: appnodejs
+  template:
+    metadata:
+      labels:
+        app: appnodejs
+    spec:
+      containers:
+      - name: appnodejs
+        image: haroldo89/demo-ingress-nodejs:1
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+          - name: http-port
+            containerPort: 8080
