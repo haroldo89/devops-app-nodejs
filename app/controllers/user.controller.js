@@ -1,8 +1,8 @@
 const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
 // importing user context
 const User = require('../models/user.model.js');
+require("dotenv").config();
 
 exports.register = (req, res) => {
     // Our register logic starts here
@@ -51,38 +51,36 @@ exports.register = (req, res) => {
 
 // Login
 exports.login = (req, res) => {
-
-// Our login logic starts here
-  try {
-    // Get user input
-    const { email, password } = req.body;
-
-    // Validate user input
-    if (!(email && password)) {
-      res.status(400).send("All input is required");
-    }
-    // Validate if user exist in our database
-    const user =  userModel.findOne({ email });
-
-    if (user && (bcrypt.compare(password, user.password))) {
-      // Create token
-      const token = jwt.sign(
-        { user_id: user._id, email },
-        process.env.TOKEN_KEY,
-        {
-          expiresIn: "2h",
+    try {
+        // Get user input
+        const { email, password } = req.body;
+        // Validate user input
+        if (!(email && password)) {
+            res.status(400).send("All input is required");
         }
-      );
-
-      // save user token
-      user.token = token;
-
-      // user
-      res.status(200).json(user);
+        // Validate if user exist in our database
+        User.findOne({ "email": email })
+            .then(user => {
+                if(user) {
+                    if (user && (bcrypt.compareSync(password, user.password))) {
+                        // Create token
+                        const token = jwt.sign(
+                            { user_id: user._id, email },
+                            process.env.TOKEN_KEY,
+                            { expiresIn: "2h" }
+                        );
+                        // save user token
+                        user.token = token;
+                        // user
+                        res.status(200).json(user);
+                    }
+                } else {
+                    console.log("No document matches the provided query.");
+                }
+            })
+            .catch(err => console.error(`Failed to find document: ${err}`));
+    } catch (err) {
+        console.log(err);
+        res.status(400).send("Invalid Credentials");
     }
-    res.status(400).send("Invalid Credentials");
-  } catch (err) {
-    console.log(err);
-  }
-  // Our register logic ends here
 };

@@ -1,9 +1,11 @@
+const auth = require("./app/middleware/auth");
 const path = require('path');
 const bodyParser = require('body-parser')
 const express = require('express');
 const app = express();
 const admin = require('firebase-admin');
 require("dotenv").config();
+
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -47,6 +49,10 @@ app.post('/submit', (req, res) => {
         message: req.body.message
     });
     res.send('Thanks for your message!');
+});
+
+app.post("/welcome", auth, (req, res) => {
+  res.status(200).send("Welcome 🙌 ");
 });
 
 require('./app/routes/user.routes.js')(app);
