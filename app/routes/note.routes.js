@@ -6,17 +6,17 @@ module.exports = (app) => {
     app.post('/notes', notes.create);
 
     // Retrieve all Notes
-    app.post('/notesAll', notes.findAll, auth);
+    app.post('/notesAll', auth, notes.findAll);
 
     // Retrieve a single Note with noteId
-    app.get('/notesTitle/:title', notes.findByTitle);
+    app.get('/notesTitle/:title', notes.findByTitle, auth);
 
     // Retrieve a single Note with noteId
-    app.get('/notes/:noteId', notes.findOne);
+    app.get('/notes/:noteId', notes.findOne, auth);
 
     // Update a Note with noteId
-    app.put('/notes/:noteId', notes.update);
+    app.put('/notes/:noteId', notes.update, auth);
 
     // Delete a Note with noteId
-    app.delete('/notes/:noteId', notes.delete);
+    app.delete('/notes/:noteId', notes.delete, auth);
 }

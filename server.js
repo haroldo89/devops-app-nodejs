@@ -2,11 +2,12 @@ const auth = require("./app/middleware/auth");
 const path = require('path');
 const bodyParser = require('body-parser')
 const express = require('express');
+var cors = require('cors');
 const app = express();
 const admin = require('firebase-admin');
 require("dotenv").config();
 
-
+app.use(cors());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }))
 

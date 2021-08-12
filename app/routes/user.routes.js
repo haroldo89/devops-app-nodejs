@@ -5,5 +5,5 @@ module.exports = (app) => {
     app.post('/register', user.register);
 
     // auth a user
-    app.post('/login', user.login);
+    app.post('/authenticate', user.login);
 }
