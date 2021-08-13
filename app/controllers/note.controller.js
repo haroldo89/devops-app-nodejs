@@ -9,11 +9,11 @@ exports.create = (req, res) => {
             message: "Note content can not be empty"
         });
     }
-
     // Create a Note
     const note = new Note({
         title: req.body.title || "Untitled Note", 
-        content: req.body.content
+        content: req.body.content,
+        published: req.body.published || false
     });
 
     // Save Note in the database
@@ -116,9 +116,10 @@ exports.update = (req, res) => {
     }
 
     // Find note and update it with the request body
-    Note.findByIdAndUpdate(req.params.noteId, {
+    Note.findByIdAndUpdate(req.body.noteId, {
         title: req.body.title || "Untitled Note",
-        content: req.body.content
+        content: req.body.content,
+        published: req.body.published || false
     }, {new: true})
     .then(note => {
         if(!note) {
@@ -141,7 +142,7 @@ exports.update = (req, res) => {
 
 // Delete a note with the specified noteId in the request
 exports.delete = (req, res) => {
-    Note.findByIdAndRemove(req.params.noteId)
+    Note.findByIdAndRemove(req.body.noteId)
     .then(note => {
         if(!note) {
             return res.status(404).send({
