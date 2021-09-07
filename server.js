@@ -31,29 +31,16 @@ mongoose.connect(dbConfig.urlServer, {
     process.exit();
 });
 
-app.get('/', (req, res) => {
-  res.send('Hello from App Engine!');
+app.get("/hello", (req, res) => {
+  res.status(200).send("Hello 🙌");
 });
 
-// define a simple route
-app.get('/json', (req, res) => {
-  res.json({"message": "Welcome to EasyNotes application. Take notes quickly. Organize and keep track of all your notes."});
-});
-
-app.get('/submit', (req, res) => {
-    res.sendFile(path.join(__dirname, '/views/form.html'));
-});
-
-app.post('/submit', (req, res) => {
-    console.log({
-        name: req.body.name,
-        message: req.body.message
-    });
-    res.send('Thanks for your message!');
-});
+// app.post("/hello", (req, res) => {
+//   res.status(200).send("Hello 🙌");
+// });
 
 app.post("/welcome", auth, (req, res) => {
-  res.status(200).send("Welcome 🙌 ");
+  res.status(200).send("Welcome 🙌");
 });
 
 require('./app/routes/user.routes.js')(app);

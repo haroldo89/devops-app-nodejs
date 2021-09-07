@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: appnodejs
-        image: haroldo89/demo-ingress-nodejs:1
+        image: haroldo89/demo-ingress-nodejs:5
         resources:
           requests:
             memory: "64Mi"
