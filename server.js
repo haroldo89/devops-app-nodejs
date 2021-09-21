@@ -29,17 +29,13 @@ mongoose.connect(dbConfig.urlServer, {
 }).catch(err => {
     console.log('Could not connect to the database. Exiting now...', err);
     process.exit();
-});
+});docker 
 
-app.get("/hello", (req, res) => {
+app.get("/api/hello", (req, res) => {
   res.status(200).send("Hello 🙌");
 });
 
-// app.post("/hello", (req, res) => {
-//   res.status(200).send("Hello 🙌");
-// });
-
-app.post("/welcome", auth, (req, res) => {
+app.post("/api/welcome", auth, (req, res) => {
   res.status(200).send("Welcome 🙌");
 });
 
@@ -47,7 +43,7 @@ require('./app/routes/user.routes.js')(app);
 require('./app/routes/note.routes.js')(app);
 
 // Listen to the App Engine-specified port, or 8080 otherwise
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}...`);

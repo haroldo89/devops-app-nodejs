@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: appnodejs
+  name: app-nodejs
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: appnodejs
+      app: app-nodejs
   template:
     metadata:
       labels:
-        app: appnodejs
+        app: app-nodejs
     spec:
       containers:
       - name: appnodejs
-        image: haroldo89/demo-ingress-nodejs:5
+        image: haroldo89/demo-ingress-nodejs:8
         resources:
           requests:
             memory: "64Mi"
@@ -24,4 +24,4 @@ spec:
             cpu: "500m"
         ports:
           - name: http-port
-            containerPort: 8080
+            containerPort: 80
