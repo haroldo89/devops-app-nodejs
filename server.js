@@ -7,7 +7,9 @@ const app = express();
 const admin = require('firebase-admin');
 require("dotenv").config();
 
-app.use(cors());
+app.use(cors({
+  origin: '*'
+}));
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -29,7 +31,7 @@ mongoose.connect(dbConfig.urlServer, {
 }).catch(err => {
     console.log('Could not connect to the database. Exiting now...', err);
     process.exit();
-});docker 
+}); 
 
 app.get("/api/hello", (req, res) => {
   res.status(200).send("Hello 🙌");

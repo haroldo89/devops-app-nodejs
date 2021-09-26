@@ -1,13 +1,12 @@
-# definicion de servicio interno.
 apiVersion: v1
 kind: Service
 metadata:
-  name: appnodejs-nodeport-service
+  name: service-nodeport-nodejs
 spec:
   type: NodePort
   ports:
     - port: 80
-      targetPort: 80
+      targetPort: 3000
       nodePort: 32000
   selector:
-    app: appnodejs
+    app: app-nodejs
