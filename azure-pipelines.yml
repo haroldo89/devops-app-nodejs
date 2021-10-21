@@ -42,25 +42,6 @@ stages:
         name: send_files_jfrog
         displayName: send files to jfrog artifactory
         continueOnError: false
-    
-      # Prepare Analysis Configuration task
-      - task: SonarQubePrepare@4
-        inputs:
-          SonarQube: 'sonarqube'
-          scannerMode: 'CLI'
-          configMode: 'manual'
-          cliProjectKey: 'node-azure-devops'
-          cliProjectName: 'node-azure-devops'
-          cliSources: '.'
-          extraProperties: |
-            sonar.typescript.lcov.reportPaths=coverage/lcov.info
-            sonar.projectVersion=$(Build.DefinitionName)_$(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
-      # Run Code Analysis task
-      - task: SonarQubeAnalyze@4
-      # Publish Quality Gate Result task
-      - task: SonarQubePublish@4
-        inputs:
-          pollingTimeoutSec: '300'
       
       # generate a artifact
       - task: PublishBuildArtifacts@1
