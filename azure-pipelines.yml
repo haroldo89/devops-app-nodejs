@@ -52,8 +52,6 @@ stages:
           cliProjectKey: 'nodejs-azure-devops'
           cliProjectName: 'nodejs-azure-devops'
           cliSources: '.'
-          extraProperties: |
-            sonar.projectVersion=$(Build.DefinitionName)_$(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
       # Run Code Analysis task
       - task: SonarQubeAnalyze@4
       # Publish Quality Gate Result task
