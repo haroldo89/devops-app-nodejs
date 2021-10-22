@@ -7,14 +7,14 @@ pool:
   vmImage: ubuntu-latest
 
 variables: 
+
   - group: jfrog-artifactory
   - name: key-jfrog
     value: $[variables.key]
-
-  - name: JFROG_REPO_BASE_URL 
-    value: "http://35.192.134.124:8082/artifactory"
-  - name: JFROG_PUBLISH_REPO_SNAPSHOT_URL 
-    value: "devops/repository/nodejs-service-release"
+  - name: url-jfrog
+    value: $[variables.url]
+  - name: repo-svc-jfrog
+    value: $[variables.artifactory_svc]
 
 name: $(Build.DefinitionName)_$(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
 
@@ -38,15 +38,16 @@ stages:
         continueOnError: false
         
       # send file to jfrog repository
-      - script: curl -u admin:$(key-jfrog) -X PUT "$(JFROG_REPO_BASE_URL)/$(JFROG_PUBLISH_REPO_SNAPSHOT_URL)/$(Build.BuildId).zip" -T nodejs_$(Build.BuildId).zip
+      - script: curl -u admin:$(key-jfrog) -X PUT "$(url-jfrog)/$(repo-svc-jfrog)/$(Build.BuildId).zip" -T nodejs_$(Build.BuildId).zip
         name: send_files_jfrog
         displayName: send files to jfrog artifactory
         continueOnError: false
       
-      # generate a artifact
-      - task: PublishBuildArtifacts@1
-        inputs:
-          PathtoPublish: '$(System.DefaultWorkingDirectory)'
+      # # generate a artifact
+      # - task: PublishBuildArtifacts@1
+      #   inputs:
+      #     PathtoPublish: '$(System.DefaultWorkingDirectory)'
+
 - stage: docker_build
   displayName: docker build and push
   dependsOn: continous_integration
