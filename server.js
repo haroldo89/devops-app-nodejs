@@ -43,6 +43,7 @@ app.post("/api/welcome", auth, (req, res) => {
 
 require('./app/routes/user.routes.js')(app);
 require('./app/routes/note.routes.js')(app);
+require('./app/routes/notese.routes.js')(app);
 
 // Listen to the App Engine-specified port, or 8080 otherwise
 const PORT = process.env.PORT || 3000;
